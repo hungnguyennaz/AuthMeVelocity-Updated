@@ -23,7 +23,7 @@ public class VelocityReloadCommand implements Command {
     public void execute(CommandSource commandSource, @NonNull String[] strings) {
         settings.reload();
         commandSource.sendMessage(
-            TextComponent.of("AuthMeBungee configuration reloaded!").color(TextColor.GREEN)
+            TextComponent.of("AuthMeVelocity configuration reloaded!").color(TextColor.GREEN)
         );
     }
 
@@ -34,7 +34,7 @@ public class VelocityReloadCommand implements Command {
 
     @Override
     public boolean hasPermission(CommandSource source, @NonNull String[] args) {
-        return source.hasPermission("authmebungee.reload");
+        return source.hasPermission("authmevelocity.reload");
     }
 
 }

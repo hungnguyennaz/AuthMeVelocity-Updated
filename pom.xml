@@ -5,13 +5,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>fr.xephi</groupId>
-    <artifactId>authmebungee</artifactId>
-    <version>2.2.0-SNAPSHOT</version>
+    <artifactId>authmevelocity</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
 
-    <name>AuthMeBungee</name>
-    <description>Bungeecord addon for AuthMe!</description>
+    <name>AuthMeVelocity</name>
+    <description>Velocity addon for AuthMe!</description>
     <inceptionYear>2017</inceptionYear>
-    <url>https://www.spigotmc.org/resources/authmebungee.50219/</url>
 
     <organization>
         <name>AuthMe-Team</name>
@@ -160,27 +159,23 @@
                     <relocations>
                         <relocation>
                             <pattern>javax.annotation</pattern>
-                            <shadedPattern>fr.xephi.authmebungee.libs.javax.annotation</shadedPattern>
+                            <shadedPattern>fr.xephi.authmevelocity.libs.javax.annotation</shadedPattern>
                         </relocation>
                         <relocation>
                             <pattern>javax.inject</pattern>
-                            <shadedPattern>fr.xephi.authmebungee.libs.javax.inject</shadedPattern>
+                            <shadedPattern>fr.xephi.authmevelocity.libs.javax.inject</shadedPattern>
                         </relocation>
                         <relocation>
                             <pattern>ch.jalu.injector</pattern>
-                            <shadedPattern>fr.xephi.authmebungee.libs.jalu.injector</shadedPattern>
+                            <shadedPattern>fr.xephi.authmevelocity.libs.jalu.injector</shadedPattern>
                         </relocation>
                         <relocation>
                             <pattern>org.yaml.snakeyaml</pattern>
-                            <shadedPattern>fr.xephi.authmebungee.libs.yaml.snakeyaml</shadedPattern>
+                            <shadedPattern>fr.xephi.authmevelocity.libs.yaml.snakeyaml</shadedPattern>
                         </relocation>
                         <relocation>
                             <pattern>ch.jalu.configme</pattern>
-                            <shadedPattern>fr.xephi.authmebungee.libs.jalu.configme</shadedPattern>
-                        </relocation>
-                        <relocation>
-                            <pattern>org.bstats</pattern>
-                            <shadedPattern>fr.xephi.authmebungee</shadedPattern>
+                            <shadedPattern>fr.xephi.authmevelocity.libs.jalu.configme</shadedPattern>
                         </relocation>
                     </relocations>
                 </configuration>
@@ -199,15 +194,14 @@
     </build>
 
     <repositories>
-        <!-- Bungeecord repository -->
-        <repository>
-            <id>oss-repo</id>
-            <url>http://oss.sonatype.org/content/groups/public</url>
-        </repository>
         <!-- CodeMc repository -->
         <repository>
             <id>codemc-repo</id>
             <url>https://repo.codemc.org/repository/maven-public/</url>
+        </repository>
+        <repository>
+            <id>velocity</id>
+            <url>https://repo.velocitypowered.com/snapshots/</url>
         </repository>
     </repositories>
 
@@ -228,28 +222,12 @@
             <scope>compile</scope>
         </dependency>
 
-        <!-- Bungeecord API -->
+        <!-- Velocity -->
         <dependency>
-            <groupId>net.md-5</groupId>
-            <artifactId>bungeecord-api</artifactId>
-            <version>1.13-SNAPSHOT</version>
-            <type>jar</type>
+            <groupId>com.velocitypowered</groupId>
+            <artifactId>velocity-api</artifactId>
+            <version>1.0.5-SNAPSHOT</version>
             <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>net.md-5</groupId>
-            <artifactId>bungeecord-api</artifactId>
-            <version>1.13-SNAPSHOT</version>
-            <type>javadoc</type>
-            <scope>provided</scope>
-        </dependency>
-
-        <!-- Metrics -->
-        <dependency>
-            <groupId>org.bstats</groupId>
-            <artifactId>bstats-bungeecord</artifactId>
-            <version>1.7</version>
-            <scope>compile</scope>
         </dependency>
     </dependencies>
 </project>

@@ -12,6 +12,7 @@ import fr.xephi.authmevelocity.config.SettingsDependent;
 import fr.xephi.authmevelocity.config.VelocityConfigProperties;
 import fr.xephi.authmevelocity.data.AuthPlayer;
 import fr.xephi.authmevelocity.services.AuthPlayerManager;
+import net.kyori.text.TextComponent;
 
 import javax.inject.Inject;
 import java.util.Optional;
@@ -39,9 +40,6 @@ public class VelocityMessageListener implements SettingsDependent {
 
     @Subscribe
     public void onPluginMessage(final PluginMessageEvent event) {
-        if (!event.getResult().isAllowed()) {
-            return;
-        }
 
         // Check if the message is for a server (ignore client messages)
 

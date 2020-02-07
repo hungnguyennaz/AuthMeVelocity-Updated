@@ -44,7 +44,8 @@ public class VelocityMessageListener implements SettingsDependent {
         }
 
         // Check if the message is for a server (ignore client messages)
-        if (!event.getIdentifier().getId().equals("BungeeCord")) {
+
+        if (!event.getIdentifier().equals(AuthMeVelocity.AUTHME_CHANNEL) && !event.getIdentifier().equals(AuthMeVelocity.LEGACY_AUTHME)) {
             return;
         }
 

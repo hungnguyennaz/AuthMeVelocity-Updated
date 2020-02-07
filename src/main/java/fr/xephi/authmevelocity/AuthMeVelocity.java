@@ -9,6 +9,8 @@ import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
 import com.velocitypowered.api.plugin.Plugin;
 import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.ProxyServer;
+import com.velocitypowered.api.proxy.messages.LegacyChannelIdentifier;
+import com.velocitypowered.api.proxy.messages.MinecraftChannelIdentifier;
 import fr.xephi.authmevelocity.annotations.DataFolder;
 import fr.xephi.authmevelocity.commands.VelocityReloadCommand;
 import fr.xephi.authmevelocity.config.VelocityConfigProperties;
@@ -23,6 +25,9 @@ import java.util.logging.Logger;
 @Plugin(id = "authmevelocity", name = "AuthMeVelocity", version = "1.0.0-SNAPSHOT",
     description = "Velocity addon for AuthMe!", authors = "AuthMeTeam")
 public class AuthMeVelocity {
+
+    public static final LegacyChannelIdentifier LEGACY_AUTHME = new LegacyChannelIdentifier("BungeeCord");
+    public static final MinecraftChannelIdentifier AUTHME_CHANNEL = MinecraftChannelIdentifier.create("bungeecord", "main");
 
     // Instances
     private static AuthMeVelocity instance;
@@ -70,6 +75,7 @@ public class AuthMeVelocity {
         proxy.getCommandManager().register(injector.getSingleton(VelocityReloadCommand.class), "abreloadproxy");
 
         // Registering event listeners
+        proxy.getChannelRegistrar().register(AUTHME_CHANNEL, LEGACY_AUTHME);
         proxy.getEventManager().register(this, injector.getSingleton(VelocityMessageListener.class));
         proxy.getEventManager().register(this, injector.getSingleton(VelocityPlayerListener.class));
     }

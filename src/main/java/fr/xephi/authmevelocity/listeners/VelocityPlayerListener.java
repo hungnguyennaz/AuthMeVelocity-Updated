@@ -12,6 +12,7 @@ import com.velocitypowered.api.event.player.ServerConnectedEvent;
 import com.velocitypowered.api.event.player.ServerPreConnectEvent;
 import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.server.ServerInfo;
+import fr.xephi.authmevelocity.AuthMeVelocity;
 import fr.xephi.authmevelocity.config.SettingsDependent;
 import fr.xephi.authmevelocity.config.VelocityConfigProperties;
 import fr.xephi.authmevelocity.data.AuthPlayer;
@@ -96,7 +97,7 @@ public class VelocityPlayerListener implements SettingsDependent {
         if (event.getMessage().startsWith("/")
             && isCommandsRequireAuth
             && commandWhitelist.contains(event.getMessage().split(" ")[0].toLowerCase())
-            || chatRequiresAuth && !event.getMessage().startsWith("/")) {
+            || !chatRequiresAuth && !event.getMessage().startsWith("/")) {
             return;
         }
 
@@ -120,7 +121,7 @@ public class VelocityPlayerListener implements SettingsDependent {
                 out.writeUTF("AuthMe.v2");
                 out.writeUTF("perform.login");
                 out.writeUTF(event.getPlayer().getUsername());
-                event.getServer().sendPluginMessage(() -> "BungeeCord", out.toByteArray());
+                event.getServer().sendPluginMessage(AuthMeVelocity.LEGACY_AUTHME, out.toByteArray());
             }
         }
     }

@@ -5,6 +5,7 @@ import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
 import com.velocitypowered.api.event.PostOrder;
 import com.velocitypowered.api.event.Subscribe;
+import com.velocitypowered.api.event.command.CommandExecuteEvent;
 import com.velocitypowered.api.event.connection.DisconnectEvent;
 import com.velocitypowered.api.event.connection.PostLoginEvent;
 import com.velocitypowered.api.event.player.PlayerChatEvent;
@@ -58,7 +59,8 @@ public class VelocityPlayerListener implements SettingsDependent {
         isCommandsRequireAuth = settings.getProperty(VelocityConfigProperties.COMMANDS_REQUIRE_AUTH);
         commandWhitelist = new ArrayList<>();
         for (final String command : settings.getProperty(VelocityConfigProperties.COMMANDS_WHITELIST)) {
-            commandWhitelist.add(command.toLowerCase());
+            // Substring so the AuthMeBungee config is usable without making modifications
+            commandWhitelist.add(command.toLowerCase().substring(1));
         }
         chatRequiresAuth = settings.getProperty(VelocityConfigProperties.CHAT_REQUIRES_AUTH);
     }
@@ -76,8 +78,34 @@ public class VelocityPlayerListener implements SettingsDependent {
     }
 
     @Subscribe(order = PostOrder.EARLY)
+    public void onCommand(final CommandExecuteEvent event) {
+        if (!(event.getCommandSource() instanceof Player) || !event.getResult().isAllowed() || !isCommandsRequireAuth) {
+            return;
+        }
+
+        final Player player = (Player) event.getCommandSource();
+
+        // Filter only unauthenticated players
+        final AuthPlayer authPlayer = authPlayerManager.getAuthPlayer(player);
+        if (authPlayer != null && authPlayer.isLogged()) {
+            return;
+        }
+        // Only in auth servers
+        if (!player.getCurrentServer().isPresent()
+            || !isAuthServer(player.getCurrentServer().get().getServerInfo())) {
+            return;
+        }
+        // Check if command is whitelisted command
+        if (commandWhitelist.contains(event.getCommand().split(" ")[0].toLowerCase())) {
+            return;
+        }
+
+        event.setResult(CommandExecuteEvent.CommandResult.denied());
+    }
+
+    @Subscribe(order = PostOrder.EARLY)
     public void onCommand(final PlayerChatEvent event) {
-        if (!event.getResult().isAllowed() || !isCommandsRequireAuth && !chatRequiresAuth) {
+        if (!event.getResult().isAllowed() ||  !chatRequiresAuth) {
             return;
         }
 
@@ -91,13 +119,6 @@ public class VelocityPlayerListener implements SettingsDependent {
         // Only in auth servers
         if (!player.getCurrentServer().isPresent()
             || !isAuthServer(player.getCurrentServer().get().getServerInfo())) {
-            return;
-        }
-        // Check if command is whitelisted command
-        if (event.getMessage().startsWith("/")
-            && isCommandsRequireAuth
-            && commandWhitelist.contains(event.getMessage().split(" ")[0].toLowerCase())
-            || !chatRequiresAuth && !event.getMessage().startsWith("/")) {
             return;
         }
 
@@ -121,7 +142,9 @@ public class VelocityPlayerListener implements SettingsDependent {
                 out.writeUTF("AuthMe.v2");
                 out.writeUTF("perform.login");
                 out.writeUTF(event.getPlayer().getUsername());
-                event.getServer().sendPluginMessage(AuthMeVelocity.LEGACY_AUTHME, out.toByteArray());
+                byte[] data = out.toByteArray();
+                event.getServer().sendPluginMessage(AuthMeVelocity.LEGACY_AUTHME, data);
+                event.getServer().sendPluginMessage(AuthMeVelocity.AUTHME_CHANNEL, data);
             }
         }
     }

@@ -6,7 +6,7 @@
 
     <groupId>fr.xephi</groupId>
     <artifactId>authmevelocity</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>1.1.0-SNAPSHOT</version>
 
     <name>AuthMeVelocity</name>
     <description>Velocity addon for AuthMe!</description>
@@ -203,6 +203,12 @@
             <id>velocity</id>
             <url>https://repo.velocitypowered.com/snapshots/</url>
         </repository>
+
+        <!-- Some dependency is using configurate so we need this -->
+        <repository>
+            <id>sponge</id>
+            <url>https://repo.spongepowered.org/maven</url>
+        </repository>
     </repositories>
 
     <dependencies>
@@ -226,7 +232,7 @@
         <dependency>
             <groupId>com.velocitypowered</groupId>
             <artifactId>velocity-api</artifactId>
-            <version>1.0.5-SNAPSHOT</version>
+            <version>1.1.3-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>

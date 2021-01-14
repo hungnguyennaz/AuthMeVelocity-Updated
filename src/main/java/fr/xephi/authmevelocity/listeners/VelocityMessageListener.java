@@ -12,7 +12,6 @@ import fr.xephi.authmevelocity.config.SettingsDependent;
 import fr.xephi.authmevelocity.config.VelocityConfigProperties;
 import fr.xephi.authmevelocity.data.AuthPlayer;
 import fr.xephi.authmevelocity.services.AuthPlayerManager;
-import net.kyori.text.TextComponent;
 
 import javax.inject.Inject;
 import java.util.Optional;
@@ -55,14 +54,8 @@ public class VelocityMessageListener implements SettingsDependent {
         // Read the plugin message
         final ByteArrayDataInput in = ByteStreams.newDataInput(event.getData());
 
-        // Accept only broadcasts
-        if (!in.readUTF().equals("Forward")) {
-            return;
-        }
-        in.readUTF(); // Skip ONLINE/ALL parameter
-
         // Let's check the subchannel
-        if (!in.readUTF().equals("AuthMe.v2.Broadcast")) {
+        if (!in.readUTF().equals("v2.Broadcast")) {
             return;
         }
 

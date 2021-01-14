@@ -26,8 +26,8 @@ import java.util.logging.Logger;
     description = "Velocity addon for AuthMe!", authors = "AuthMeTeam")
 public class AuthMeVelocity {
 
-    public static final LegacyChannelIdentifier LEGACY_AUTHME = new LegacyChannelIdentifier("BungeeCord");
-    public static final MinecraftChannelIdentifier AUTHME_CHANNEL = MinecraftChannelIdentifier.create("bungeecord", "main");
+    public static final LegacyChannelIdentifier LEGACY_AUTHME = new LegacyChannelIdentifier("AuthMe");
+    public static final MinecraftChannelIdentifier AUTHME_CHANNEL = MinecraftChannelIdentifier.create("authme", "main");
 
     // Instances
     private static AuthMeVelocity instance;

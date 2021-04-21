@@ -105,7 +105,7 @@ public class VelocityPlayerListener implements SettingsDependent {
 
     @Subscribe(order = PostOrder.EARLY)
     public void onCommand(final PlayerChatEvent event) {
-        if (!event.getResult().isAllowed() ||  !chatRequiresAuth) {
+        if (!event.getResult().isAllowed() || !chatRequiresAuth) {
             return;
         }
 

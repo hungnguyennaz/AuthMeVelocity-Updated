@@ -4,6 +4,8 @@ import ch.jalu.configme.SettingsManager;
 import ch.jalu.injector.Injector;
 import ch.jalu.injector.InjectorBuilder;
 import com.google.inject.Inject;
+import com.velocitypowered.api.command.CommandManager;
+import com.velocitypowered.api.command.CommandMeta;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
 import com.velocitypowered.api.plugin.Plugin;
@@ -72,7 +74,11 @@ public class AuthMeVelocity {
         }
 
         // Register commands
-        proxy.getCommandManager().register(injector.getSingleton(VelocityReloadCommand.class), "abreloadproxy");
+        CommandManager commandManager = proxy.getCommandManager();
+        CommandMeta meta = commandManager.metaBuilder("abreloadproxy")
+            .aliases("authmevelocityreload", "amvreload", "amvr")
+            .build();
+        commandManager.register(meta, new VelocityReloadCommand(settings));
 
         // Registering event listeners
         proxy.getChannelRegistrar().register(AUTHME_CHANNEL, LEGACY_AUTHME);

@@ -1,16 +1,13 @@
 package fr.xephi.authmevelocity.commands;
 
 import ch.jalu.configme.SettingsManager;
-import com.velocitypowered.api.command.Command;
-import com.velocitypowered.api.command.CommandSource;
-import net.kyori.text.TextComponent;
-import net.kyori.text.format.TextColor;
-import org.checkerframework.checker.nullness.qual.NonNull;
+import com.velocitypowered.api.command.RawCommand;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 
 import javax.inject.Inject;
-import java.util.List;
 
-public class VelocityReloadCommand implements Command {
+public class VelocityReloadCommand implements RawCommand {
 
     private SettingsManager settings;
 
@@ -20,21 +17,16 @@ public class VelocityReloadCommand implements Command {
     }
 
     @Override
-    public void execute(CommandSource commandSource, @NonNull String[] strings) {
+    public void execute(Invocation invocation) {
         settings.reload();
-        commandSource.sendMessage(
-            TextComponent.of("AuthMeVelocity configuration reloaded!").color(TextColor.GREEN)
+        invocation.source().sendMessage(
+            Component.text("AuthMeVelocity configuration reloaded!").color(NamedTextColor.GREEN)
         );
     }
 
     @Override
-    public List<String> suggest(CommandSource source, @NonNull String[] currentArgs) {
-        return null;
-    }
-
-    @Override
-    public boolean hasPermission(CommandSource source, @NonNull String[] args) {
-        return source.hasPermission("authmevelocity.reload");
+    public boolean hasPermission(Invocation invocation) {
+        return invocation.source().hasPermission("authmevelocity.reload");
     }
 
 }

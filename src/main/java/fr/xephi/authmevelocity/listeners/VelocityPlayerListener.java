@@ -18,8 +18,8 @@ import fr.xephi.authmevelocity.config.SettingsDependent;
 import fr.xephi.authmevelocity.config.VelocityConfigProperties;
 import fr.xephi.authmevelocity.data.AuthPlayer;
 import fr.xephi.authmevelocity.services.AuthPlayerManager;
-import net.kyori.text.TextComponent;
-import net.kyori.text.format.TextColor;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 
 import javax.inject.Inject;
 import java.util.ArrayList;
@@ -173,7 +173,7 @@ public class VelocityPlayerListener implements SettingsDependent {
         if (isServerSwitchRequiresAuth) {
             event.setResult(ServerPreConnectEvent.ServerResult.denied());
 
-            final TextComponent reasonMessage = TextComponent.of(requiresAuthKickMessage).color(TextColor.RED);
+            final Component reasonMessage = Component.text(requiresAuthKickMessage).color(NamedTextColor.RED);
 
             if (player.getCurrentServer().isPresent()) {
                 player.sendMessage(reasonMessage);
